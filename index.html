@@ -52,6 +52,17 @@
     .brand-badge img { width: 22px; height: 22px; object-fit: contain; }
     .brand-badge span { font-size: 11px; color: #fff; letter-spacing: 0.05em; font-weight: 700; }
 
+    /* === 公版巨大浮水印「TXGCCA」（分隔頁用）=== */
+    .brand-watermark {
+      position: absolute; top: 0; bottom: 0; right: 2%;
+      display: flex; align-items: center;
+      writing-mode: vertical-rl;
+      font-size: 5.5em; font-weight: 900; letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.22);
+      pointer-events: none; white-space: nowrap;
+    }
+    .brand-watermark.dark { color: rgba(0,55,100,0.16); }
+
     /* === 封面 / 轉場 / 封底 === */
     .title-slide, .transition-slide, .end-slide { text-align: center; }
     .title-slide .tag, .transition-slide .tag {
@@ -183,10 +194,8 @@
 <div class="reveal">
   <div class="slides">
 
-    <!-- 1. 封面 [BG] -->
-    <section data-background-image="images/cover.png"
-             data-background-opacity="0.4"
-             data-background-size="cover">
+    <!-- 1. 封面 [BG：公版藍綠漸層] -->
+    <section data-background-gradient="linear-gradient(135deg, #173A65 0%, #2C5A82 35%, #4C8CA0 55%, #2C5A82 75%, #173A65 100%)">
       <div class="title-slide">
         <div class="org-header">
           <img src="images/logo.png" alt="社團法人臺中市韌民協會">
@@ -356,16 +365,15 @@
       </div>
     </section>
 
-    <!-- 7. 交織性強調頁 [BG] -->
-    <section data-background-image="images/intersect.png"
-             data-background-opacity="0.4"
-             data-background-size="cover">
-      <div class="quote-box">
+    <!-- 7. 交織性強調頁 [BG：公版青綠分隔頁] -->
+    <section data-background-color="#6CDAC8">
+      <div class="brand-watermark dark">TXGCCA</div>
+      <div class="quote-box" style="background:rgba(0,30,40,0.3); border-left-color: var(--navy);">
         女性在災害中面臨的挑戰，並非單一原因所致，而是照顧角色、城鄉差距、身心障礙、語言文化與性別暴力風險等
-        <b style="color:var(--accent2);">「交織性 Intersectionality」</b>
+        <b style="color:var(--navy);">「交織性 Intersectionality」</b>
         因素疊加的結果。
       </div>
-      <div class="quote-sub">防災計畫必須打破均質化的假定，將性別與多元人權視角納入資源盤點與應變決策，才能真正接住每一位脆弱處境中的民眾。</div>
+      <div class="quote-sub" style="color:#023047;">防災計畫必須打破均質化的假定，將性別與多元人權視角納入資源盤點與應變決策，才能真正接住每一位脆弱處境中的民眾。</div>
     </section>
 
     <!-- 8. 三層次行動策略總覽 [ICON] -->
@@ -478,13 +486,11 @@
     </section>
 
     <!-- 14. 章節轉場 [BG] -->
-    <section data-background-image="images/transition.png"
-             data-background-opacity="0.4"
-             data-background-size="cover">
+    <section data-background-gradient="linear-gradient(135deg, #EC763C 0%, #F0975E 35%, #F2B492 55%, #F0975E 75%, #EC763C 100%)">
       <div class="transition-slide">
-        <div class="tag">講師應對與心法</div>
-        <h1>當學員說出真實處境時</h1>
-        <p class="subtitle">講師的回應方式，往往決定她願不願意繼續說下去</p>
+        <div class="tag" style="background:var(--navy);">講師應對與心法</div>
+        <h1 style="color:#fff;">當學員說出真實處境時</h1>
+        <p class="subtitle" style="color:#fff2e8;">講師的回應方式，往往決定她願不願意繼續說下去</p>
       </div>
     </section>
 
@@ -551,10 +557,8 @@
       </div>
     </section>
 
-    <!-- 18. 結語 [BG] -->
-    <section data-background-image="images/ending.png"
-             data-background-opacity="0.4"
-             data-background-size="cover">
+    <!-- 18. 結語 [BG：公版深藍] -->
+    <section data-background-color="#003764">
       <div class="end-slide">
         <div class="org-header">
           <img src="images/logo.png" alt="社團法人臺中市韌民協會">
