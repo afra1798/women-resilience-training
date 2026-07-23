@@ -19,8 +19,8 @@
       --navy:    #003764;
       --navy-deep: #012544;
       --accent:  #FF6921;   /* 品牌橘（LOGO 十字）*/
-      --accent2: #2FBFA8;   /* 品牌青綠（深化版，正文用） */
-      --teal:    #6CDAC8;   /* 品牌青綠（原色，底圖/分隔頁用） */
+      --accent2: #2cd5c4;   /* 品牌青綠（正文用） */
+      --teal:    #2cd5c4;   /* 品牌青綠（底圖/分隔頁用） */
       --success: #81c784;
       --warn:    #ffb74d;
       --light-bg: #f2f2f2;
@@ -177,8 +177,8 @@
     #viz-after ul li.new { color: var(--warn); font-weight: 700; }
     #viz-divider {
       position: absolute; top: 0; left: 0; width: 3px; height: 100%;
-      background: linear-gradient(to bottom, transparent, #2FBFA8, transparent);
-      box-shadow: 0 0 12px #2FBFA8; pointer-events: none;
+      background: linear-gradient(to bottom, transparent, #2cd5c4, transparent);
+      box-shadow: 0 0 12px #2cd5c4; pointer-events: none;
     }
     #viz-slider { width: 100%; margin-top: 14px; }
 
@@ -366,7 +366,7 @@
     </section>
 
     <!-- 7. 交織性強調頁 [BG：公版青綠分隔頁] -->
-    <section data-background-color="#6CDAC8">
+    <section data-background-color="#2cd5c4">
       <div class="brand-watermark dark">TXGCCA</div>
       <div class="quote-box" style="background:rgba(0,30,40,0.3); border-left-color: var(--navy);">
         女性在災害中面臨的挑戰，並非單一原因所致，而是照顧角色、城鄉差距、身心障礙、語言文化與性別暴力風險等
@@ -621,7 +621,7 @@
 
   /* ===== 文字雲 ===== */
   const wordsRef = collection(fdb, 'women_resilience_training_wordcloud');
-  const COLORS = ['#2FBFA8','#FF6921','#ffb74d','#81c784','#6CDAC8','#8fd6ff','#f48fb1'];
+  const COLORS = ['#2cd5c4','#FF6921','#ffb74d','#81c784','#003764','#8fd6ff','#f48fb1'];
   let wcData = [];
 
   window.wcSubmit = async function() {
