@@ -10,24 +10,47 @@
   <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js"></script>
   <style>
     :root {
-      --accent:  #e8643a;
-      --accent2: #4fc3f7;
+      /* === TXGCCA 社團法人臺中市韌民協會 品牌色 === */
+      --r-background-color: #04304f;
+      --r-main-color: #eef3f6;
+      --r-heading-color: #ffffff;
+      --r-link-color: #FF6921;
+
+      --navy:    #003764;
+      --navy-deep: #012544;
+      --accent:  #FF6921;   /* 品牌橘（LOGO 十字）*/
+      --accent2: #2FBFA8;   /* 品牌青綠（深化版，正文用） */
+      --teal:    #6CDAC8;   /* 品牌青綠（原色，底圖/分隔頁用） */
       --success: #81c784;
       --warn:    #ffb74d;
+      --light-bg: #f2f2f2;
     }
 
     .reveal { font-family: 'Segoe UI', 'Noto Sans TC', sans-serif; }
     .reveal h1, .reveal h2, .reveal h3 {
       font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
-      font-weight: 700;
-      letter-spacing: -0.02em;
+      font-weight: 800;
+      letter-spacing: -0.01em;
     }
     .reveal h1 { font-size: 2.2em; }
-    .reveal h2 { font-size: 1.5em; color: var(--accent2); }
+    .reveal h2 {
+      font-size: 1.5em; color: var(--accent2);
+      padding-bottom: 0.25em; margin-bottom: 0.5em;
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+    }
     .reveal .progress { color: var(--accent); }
     .reveal .fragment { opacity: 0.2; }
     .reveal .fragment.visible { opacity: 1; }
     .reveal section { font-size: 0.95em; }
+
+    /* === 品牌浮水印 / 固定角標（貫穿全簡報）=== */
+    .brand-badge {
+      position: fixed; right: 22px; bottom: 16px; z-index: 40;
+      display: flex; align-items: center; gap: 8px;
+      opacity: 0.55; pointer-events: none;
+    }
+    .brand-badge img { width: 22px; height: 22px; object-fit: contain; }
+    .brand-badge span { font-size: 11px; color: #fff; letter-spacing: 0.05em; font-weight: 700; }
 
     /* === 封面 / 轉場 / 封底 === */
     .title-slide, .transition-slide, .end-slide { text-align: center; }
@@ -37,18 +60,31 @@
       color: #fff;
       padding: 4px 14px;
       border-radius: 20px;
-      font-size: 0.5em;
+      font-size: 0.44em;
       letter-spacing: 0.08em;
-      margin-bottom: 0.8em;
+      margin-bottom: 0.6em;
       font-weight: 600;
     }
-    .title-slide .subtitle { font-size: 0.68em; color: #aaa; margin-top: 0.6em; }
-    .title-slide .author   { margin-top: 2em; font-size: 0.44em; color: #888; }
+    .title-slide .subtitle { font-size: 0.56em; color: #cfd8dc; margin-top: 0.5em; }
+    .title-slide .author   { margin-top: 2em; font-size: 0.44em; color: #9fb0ba; }
     .transition-slide h1 { font-size: 1.7em; color: #fff; }
-    .transition-slide .subtitle { font-size: 0.6em; color: #bbb; margin-top: 0.7em; }
+    .transition-slide .subtitle { font-size: 0.6em; color: #cfd8dc; margin-top: 0.7em; }
     .end-slide .big { font-size: 3em; margin-bottom: 0.2em; }
     .end-slide h1 { font-size: 1.5em; }
-    .end-slide .tagline { font-size: 0.6em; color: #aaa; margin-top: 0.6em; }
+    .end-slide .tagline { font-size: 0.6em; color: #cfd8dc; margin-top: 0.6em; }
+
+    /* === 協會品牌 header/footer（封面／封底）=== */
+    .org-header { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 1em; }
+    .org-header img { width: 42px; height: 42px; object-fit: contain; }
+    .org-header .org-name-zh { font-size: 0.42em; font-weight: 800; color: #fff; line-height: 1.3; }
+    .org-header .org-name-en { font-size: 0.26em; font-weight: 700; color: var(--teal); letter-spacing: 0.02em; }
+    .org-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.25);
+      margin-top: 2.2em; padding-top: 10px;
+      font-size: 0.26em; color: #b8c4cc; letter-spacing: 0.03em;
+    }
+    .org-footer b { color: var(--teal); font-weight: 700; }
 
     /* === 優勢卡 / ICON 卡 === */
     .adv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 0.7em; }
@@ -64,7 +100,7 @@
     .adv-card .adv-icon img {
       width: 56px; height: 56px; object-fit: contain;
       display: block; margin: 0 auto;
-      filter: drop-shadow(0 0 10px rgba(79,195,247,0.6));
+      filter: drop-shadow(0 0 10px rgba(47,191,168,0.6));
     }
     .adv-card .adv-title { font-size: 0.46em; font-weight: 700; color: var(--accent2); margin-bottom: 6px; }
     .adv-card .adv-desc  { font-size: 0.36em; color: #bbb; line-height: 1.6; }
@@ -123,15 +159,15 @@
     .viz-panel .viz-label { font-size: 0.42em; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 12px; }
     .viz-panel ul { list-style: none; padding: 0; margin: 0; font-size: 0.4em; line-height: 2; color: #eee; }
     .viz-panel ul li::before { content: "✦ "; opacity: 0.6; }
-    #viz-before { background: linear-gradient(135deg, #1a1a2e, #0d1117); }
-    #viz-before .viz-label { color: #aaa; }
-    #viz-after { background: linear-gradient(135deg, #123040, #0d1117); clip-path: inset(0 100% 0 0); }
+    #viz-before { background: linear-gradient(135deg, #0a4270, var(--navy-deep)); }
+    #viz-before .viz-label { color: #b8c4cc; }
+    #viz-after { background: linear-gradient(135deg, #0d5245, var(--navy-deep)); clip-path: inset(0 100% 0 0); }
     #viz-after .viz-label { color: var(--accent2); }
     #viz-after ul li.new { color: var(--warn); font-weight: 700; }
     #viz-divider {
       position: absolute; top: 0; left: 0; width: 3px; height: 100%;
-      background: linear-gradient(to bottom, transparent, #4fc3f7, transparent);
-      box-shadow: 0 0 12px #4fc3f7; pointer-events: none;
+      background: linear-gradient(to bottom, transparent, #2FBFA8, transparent);
+      box-shadow: 0 0 12px #2FBFA8; pointer-events: none;
     }
     #viz-slider { width: 100%; margin-top: 14px; }
 
@@ -140,19 +176,33 @@
   </style>
 </head>
 <body>
+<div class="brand-badge">
+  <img src="images/logo.png" alt="">
+  <span>TXGCCA.ORG.TW</span>
+</div>
 <div class="reveal">
   <div class="slides">
 
     <!-- 1. 封面 [BG] -->
     <section data-background-image="images/cover.png"
-             data-background-opacity="0.35"
+             data-background-opacity="0.4"
              data-background-size="cover">
       <div class="title-slide">
+        <div class="org-header">
+          <img src="images/logo.png" alt="社團法人臺中市韌民協會">
+          <div>
+            <div class="org-name-zh">社團法人臺中市韌民協會</div>
+            <div class="org-name-en">TAICHUNG CITY CITIZEN CORPS ASSOCIATION</div>
+          </div>
+        </div>
         <div class="tag">多元處境女性防災教育培力課程</div>
-        <h1>多元處境女性防災韌性</h1>
-        <h2 style="color:var(--accent); margin-top:0.2em;">與包容性防災策略</h2>
+        <h1 style="border-bottom:none;">多元處境女性防災韌性</h1>
+        <h2 style="color:var(--accent); margin-top:0.2em; border-bottom:none;">與包容性防災策略</h2>
         <p class="subtitle">從個人準備到制度包容——接住每一位脆弱處境中的女性</p>
-        <p class="author">臺中市韌民協會 · 民防教育培力課程</p>
+      </div>
+      <div class="org-footer">
+        <span>中市社團字第1130158795號｜113 法登 證社字第000117號</span>
+        <b>TXGCCA.ORG.TW</b>
       </div>
     </section>
 
@@ -164,11 +214,11 @@
           <div style="background:rgba(255,255,255,0.06); border-radius:10px; padding:14px;">
             <div style="font-size:0.38em; color:var(--accent2); font-weight:700; margin-bottom:8px;">輸入你的答案</div>
             <input id="wc-input" type="text" placeholder="輸入關鍵詞…" maxlength="20"
-              style="width:100%; padding:8px 12px; border-radius:8px; border:1px solid rgba(79,195,247,0.3);
+              style="width:100%; padding:8px 12px; border-radius:8px; border:1px solid rgba(47,191,168,0.3);
                      background:rgba(255,255,255,0.08); color:#fff; font-size:13px;
                      box-sizing:border-box; font-family:inherit; outline:none;" />
             <button id="wc-btn"
-              style="width:100%; margin-top:8px; padding:9px; background:var(--accent2); color:#0d1117;
+              style="width:100%; margin-top:8px; padding:9px; background:var(--accent2); color:var(--navy-deep);
                      border:none; border-radius:8px; font-weight:700; font-size:13px; cursor:pointer;">
               送出 ↵
             </button>
@@ -506,13 +556,19 @@
              data-background-opacity="0.4"
              data-background-size="cover">
       <div class="end-slide">
-        <div class="big">
-          <img src="images/icon_network.png" alt=""
-               style="width:150px;height:150px;object-fit:contain;
-                      filter:drop-shadow(0 0 24px rgba(79,195,247,0.7));">
+        <div class="org-header">
+          <img src="images/logo.png" alt="社團法人臺中市韌民協會">
+          <div>
+            <div class="org-name-zh">社團法人臺中市韌民協會</div>
+            <div class="org-name-en">TAICHUNG CITY CITIZEN CORPS ASSOCIATION</div>
+          </div>
         </div>
-        <h1 style="color:var(--accent2);">接住每一位脆弱處境中的女性</h1>
+        <h1 style="color:var(--accent2); border-bottom:none;">接住每一位脆弱處境中的女性</h1>
         <p class="tagline">防災，不是均質化的假定，而是看見每一個人。</p>
+      </div>
+      <div class="org-footer">
+        <span>自救互助 ‧ 社會韌性 ‧ 共同行動</span>
+        <b>TXGCCA.ORG.TW</b>
       </div>
     </section>
 
@@ -561,7 +617,7 @@
 
   /* ===== 文字雲 ===== */
   const wordsRef = collection(fdb, 'women_resilience_training_wordcloud');
-  const COLORS = ['#4fc3f7','#e8643a','#ffb74d','#81c784','#ce93d8','#80deea','#f48fb1'];
+  const COLORS = ['#2FBFA8','#FF6921','#ffb74d','#81c784','#6CDAC8','#8fd6ff','#f48fb1'];
   let wcData = [];
 
   window.wcSubmit = async function() {
