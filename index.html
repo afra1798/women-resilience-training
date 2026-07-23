@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>多元處境女性防災韌性與包容性防災策略</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css" />
+  <script src="https://cdn.jsdelivr.net/npm/wordcloud@1.2.2/src/wordcloud2.min.js"></script>
+  <style>
+    :root {
+      --accent:  #e8643a;
+      --accent2: #4fc3f7;
+      --success: #81c784;
+      --warn:    #ffb74d;
+    }
+
+    .reveal { font-family: 'Segoe UI', 'Noto Sans TC', sans-serif; }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .reveal h1 { font-size: 2.2em; }
+    .reveal h2 { font-size: 1.5em; color: var(--accent2); }
+    .reveal .progress { color: var(--accent); }
+    .reveal .fragment { opacity: 0.2; }
+    .reveal .fragment.visible { opacity: 1; }
+    .reveal section { font-size: 0.95em; }
+
+    /* === 封面 / 轉場 / 封底 === */
+    .title-slide, .transition-slide, .end-slide { text-align: center; }
+    .title-slide .tag, .transition-slide .tag {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.5em;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.8em;
+      font-weight: 600;
+    }
+    .title-slide .subtitle { font-size: 0.68em; color: #aaa; margin-top: 0.6em; }
+    .title-slide .author   { margin-top: 2em; font-size: 0.44em; color: #888; }
+    .transition-slide h1 { font-size: 1.7em; color: #fff; }
+    .transition-slide .subtitle { font-size: 0.6em; color: #bbb; margin-top: 0.7em; }
+    .end-slide .big { font-size: 3em; margin-bottom: 0.2em; }
+    .end-slide h1 { font-size: 1.5em; }
+    .end-slide .tagline { font-size: 0.6em; color: #aaa; margin-top: 0.6em; }
+
+    /* === 優勢卡 / ICON 卡 === */
+    .adv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 0.7em; }
+    .adv-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .adv-card {
+      background: rgba(255,255,255,0.05);
+      border-top: 4px solid var(--accent2);
+      border-radius: 8px;
+      padding: 16px 12px;
+      text-align: center;
+    }
+    .adv-card .adv-icon { margin-bottom: 8px; }
+    .adv-card .adv-icon img {
+      width: 56px; height: 56px; object-fit: contain;
+      display: block; margin: 0 auto;
+      filter: drop-shadow(0 0 10px rgba(79,195,247,0.6));
+    }
+    .adv-card .adv-title { font-size: 0.46em; font-weight: 700; color: var(--accent2); margin-bottom: 6px; }
+    .adv-card .adv-desc  { font-size: 0.36em; color: #bbb; line-height: 1.6; }
+
+    /* === 兩欄卡 === */
+    .split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 0.6em; text-align: left; }
+    .split-col { background: rgba(255,255,255,0.05); border-radius: 10px; padding: 18px; }
+    .split-col.left  { border-top: 3px solid var(--accent2); }
+    .split-col.right { border-top: 3px solid var(--warn); }
+    .split-title { font-size: 0.5em; font-weight: 700; margin-bottom: 10px; }
+    .split-col.left .split-title  { color: var(--accent2); }
+    .split-col.right .split-title { color: var(--warn); }
+    .split-col ul { font-size: 0.36em; list-style: none; padding: 0; margin: 0; line-height: 1.75; }
+    .split-col ul li { padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .split-col ul li:last-child { border-bottom: none; }
+    .split-col ul li::before { content: "→ "; color: var(--accent); opacity: 0.8; }
+
+    /* === 四象限卡 === */
+    .quad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 0.7em; text-align: left; }
+    .quad-card { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 16px 18px; border-left: 4px solid var(--accent2); }
+    .quad-card .qc-num { font-size: 0.75em; font-weight: 800; color: var(--accent); }
+    .quad-card .qc-title { font-size: 0.42em; font-weight: 700; color: #fff; margin-top: 4px; line-height: 1.5; }
+
+    /* === 清單頁 === */
+    .plain-list { list-style: none; padding: 0; margin: 0.8em 0 0; text-align: left; font-size: 0.5em; }
+    .plain-list li {
+      background: rgba(255,255,255,0.05);
+      border-left: 4px solid var(--accent2);
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin-bottom: 10px;
+      color: #ddd;
+      line-height: 1.6;
+    }
+    .plain-list li b { color: var(--accent2); }
+
+    /* === 交織性強調頁 === */
+    .quote-box {
+      background: rgba(0,0,0,0.35);
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      padding: 22px 26px;
+      margin: 0.8em auto 0;
+      font-size: 0.6em;
+      color: #eee;
+      font-style: italic;
+      line-height: 1.8;
+      max-width: 780px;
+      text-align: left;
+    }
+    .quote-sub { font-size: 0.42em; color: #ccc; margin-top: 1em; max-width: 780px; margin-left:auto; margin-right:auto; line-height:1.7; text-align:left; }
+
+    /* === VIZ 滑桿 === */
+    .viz-wrap { position: relative; height: 400px; border-radius: 14px; overflow: hidden; margin-top: 0.6em; border: 1px solid rgba(255,255,255,0.1); }
+    .viz-panel { position: absolute; inset: 0; padding: 26px 30px; box-sizing: border-box; text-align: left; }
+    .viz-panel .viz-label { font-size: 0.42em; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 12px; }
+    .viz-panel ul { list-style: none; padding: 0; margin: 0; font-size: 0.4em; line-height: 2; color: #eee; }
+    .viz-panel ul li::before { content: "✦ "; opacity: 0.6; }
+    #viz-before { background: linear-gradient(135deg, #1a1a2e, #0d1117); }
+    #viz-before .viz-label { color: #aaa; }
+    #viz-after { background: linear-gradient(135deg, #123040, #0d1117); clip-path: inset(0 100% 0 0); }
+    #viz-after .viz-label { color: var(--accent2); }
+    #viz-after ul li.new { color: var(--warn); font-weight: 700; }
+    #viz-divider {
+      position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+      background: linear-gradient(to bottom, transparent, #4fc3f7, transparent);
+      box-shadow: 0 0 12px #4fc3f7; pointer-events: none;
+    }
+    #viz-slider { width: 100%; margin-top: 14px; }
+
+    /* === LIVE 動畫 === */
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+  </style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+
+    <!-- 1. 封面 [BG] -->
+    <section data-background-image="images/cover.png"
+             data-background-opacity="0.35"
+             data-background-size="cover">
+      <div class="title-slide">
+        <div class="tag">多元處境女性防災教育培力課程</div>
+        <h1>多元處境女性防災韌性</h1>
+        <h2 style="color:var(--accent); margin-top:0.2em;">與包容性防災策略</h2>
+        <p class="subtitle">從個人準備到制度包容——接住每一位脆弱處境中的女性</p>
+        <p class="author">臺中市韌民協會 · 民防教育培力課程</p>
+      </div>
+    </section>
+
+    <!-- 2. 破冰提問 [INTERACT:wordcloud] -->
+    <section id="slide-wordcloud">
+      <h2 style="font-size:1.1em; margin-bottom:0.4em;">說到「多元處境」，你會想到哪些身分或處境？</h2>
+      <div style="display:grid; grid-template-columns:250px 1fr; gap:14px; height:440px;">
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="background:rgba(255,255,255,0.06); border-radius:10px; padding:14px;">
+            <div style="font-size:0.38em; color:var(--accent2); font-weight:700; margin-bottom:8px;">輸入你的答案</div>
+            <input id="wc-input" type="text" placeholder="輸入關鍵詞…" maxlength="20"
+              style="width:100%; padding:8px 12px; border-radius:8px; border:1px solid rgba(79,195,247,0.3);
+                     background:rgba(255,255,255,0.08); color:#fff; font-size:13px;
+                     box-sizing:border-box; font-family:inherit; outline:none;" />
+            <button id="wc-btn"
+              style="width:100%; margin-top:8px; padding:9px; background:var(--accent2); color:#0d1117;
+                     border:none; border-radius:8px; font-weight:700; font-size:13px; cursor:pointer;">
+              送出 ↵
+            </button>
+          </div>
+          <div style="background:rgba(255,255,255,0.06); border-radius:10px; padding:14px; flex:1; overflow:hidden; display:flex; flex-direction:column;">
+            <div style="font-size:0.38em; color:var(--accent2); font-weight:700; margin-bottom:8px;">
+              熱門答案
+              <span style="display:inline-block; background:#ff4757; color:#fff; padding:2px 7px;
+                           border-radius:10px; font-size:0.85em; animation:pulse 1.5s infinite;">LIVE</span>
+            </div>
+            <div id="wc-list" style="font-size:0.34em; overflow-y:auto; flex:1; color:#ccc;"></div>
+            <div style="margin-top:8px; font-size:0.32em; color:#666; border-top:1px solid rgba(255,255,255,0.08); padding-top:6px;">
+              總提交：<span id="wc-total" style="color:var(--accent); font-weight:700;">0</span>
+              不同答案：<span id="wc-unique" style="color:var(--accent2); font-weight:700;">0</span>
+            </div>
+          </div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04); border-radius:12px; overflow:hidden;
+                    position:relative; border:1px solid rgba(255,255,255,0.07);">
+          <canvas id="wc-canvas" style="width:100%; height:100%; display:block;"></canvas>
+          <div id="wc-empty" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+                                     color:#444; font-size:0.42em; text-align:center;
+                                     pointer-events:none; line-height:2;">
+            輸入第一個答案<br>文字雲就會出現 ✨
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. ResilienceOS 核心架構 [ICON] -->
+    <section>
+      <h2>課程總覽：ResilienceOS 核心架構</h2>
+      <div class="adv-grid">
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_risk.png" alt="Risk"></div>
+          <div class="adv-title">Risk 看見風險</div>
+          <div class="adv-desc">辨識潛在災害與威脅來源</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_vulnerability.png" alt="Vulnerability"></div>
+          <div class="adv-title">Vulnerability 辨識脆弱性</div>
+          <div class="adv-desc">找出特定處境下的弱點</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_resilience.png" alt="Resilience"></div>
+          <div class="adv-title">Resilience 提升韌性</div>
+          <div class="adv-desc">強化承受衝擊的能力</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_action.png" alt="Action"></div>
+          <div class="adv-title">Action 採取行動</div>
+          <div class="adv-desc">把準備轉化為具體行動</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_network.png" alt="Network"></div>
+          <div class="adv-title">Network 建立網絡</div>
+          <div class="adv-desc">連結社區與專業支持系統</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_recovery.png" alt="Recovery"></div>
+          <div class="adv-title">Recovery 恢復生活</div>
+          <div class="adv-desc">災後重建日常與尊嚴</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 四大脆弱面向總覽 -->
+    <section>
+      <h2>女性在災害中面臨的四大脆弱面向</h2>
+      <div class="quad-grid">
+        <div class="quad-card fragment">
+          <div class="qc-num">01</div>
+          <div class="qc-title">沉重的照顧責任與優先自保的兩難</div>
+        </div>
+        <div class="quad-card fragment">
+          <div class="qc-num">02</div>
+          <div class="qc-title">語言、數位與感官造成的資訊落差</div>
+        </div>
+        <div class="quad-card fragment">
+          <div class="qc-num">03</div>
+          <div class="qc-title">制度性排除與特殊生理物資的匱乏</div>
+        </div>
+        <div class="quad-card fragment">
+          <div class="qc-num">04</div>
+          <div class="qc-title">生理條件、無障礙設施與人身安全的行動限制</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 深入①② -->
+    <section>
+      <h2 style="font-size:1.15em;">深入①②：照顧責任的兩難 × 資訊的落差</h2>
+      <div class="split-grid">
+        <div class="split-col left">
+          <div class="split-title">① 照顧責任的兩難</div>
+          <ul>
+            <li>帶著嬰幼兒避難，無法隨心所欲移動，甚至難以兼顧自身安危</li>
+            <li>照顧精神疾患或失智家屬：如何維持規律服藥、防止走失與情緒爆發</li>
+            <li>教保人員的抉擇兩難：先顧自己孩子，還是留下照顧別人的孩子</li>
+          </ul>
+        </div>
+        <div class="split-col right">
+          <div class="split-title">② 資訊的落差</div>
+          <ul>
+            <li>新住民與移工：語言隔閡、不熟悉政府機構、缺乏在地支持網絡</li>
+            <li>身心障礙者：警報響起，視障者聽得到卻看不見方向，聽障者看得見混亂卻聽不到廣播</li>
+            <li>高齡女性：數位工具使用率偏低，難以依賴智慧型手機獲取即時災訊</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. 深入③④ -->
+    <section>
+      <h2 style="font-size:1.15em;">深入③④：資源的匱乏 × 行動與安全的限制</h2>
+      <div class="split-grid">
+        <div class="split-col left">
+          <div class="split-title">③ 資源的匱乏</div>
+          <ul>
+            <li>避難包與收容物資常遺漏生理用品、孕產與嬰幼兒必需品、慢性病用藥</li>
+            <li>以「戶籍」為配給單位，同性伴侶、多元家庭可能無法順利共同取得資源</li>
+            <li>原住民與偏鄉女性身處高風險區，可獲得的制度性資源相對匱乏</li>
+            <li>家暴女性求助管道中斷，甚至被迫與加害人共同受困</li>
+          </ul>
+        </div>
+        <div class="split-col right">
+          <div class="split-title">④ 行動與安全的限制</div>
+          <ul>
+            <li>孕婦、高齡、肢體障礙者移動緩慢、無法提重物</li>
+            <li>依賴呼吸器、抽痰機的重度障礙者，斷水斷電即面臨生存威脅</li>
+            <li>收容所常缺乏無障礙坡道、扶手，以及性別隱私的更衣室與哺乳室</li>
+            <li>災後性別暴力風險升高，女性不敢夜間如廁而減少喝水，引發膀胱炎、陰道炎、深靜脈血栓</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. 交織性強調頁 [BG] -->
+    <section data-background-image="images/intersect.png"
+             data-background-opacity="0.4"
+             data-background-size="cover">
+      <div class="quote-box">
+        女性在災害中面臨的挑戰，並非單一原因所致，而是照顧角色、城鄉差距、身心障礙、語言文化與性別暴力風險等
+        <b style="color:var(--accent2);">「交織性 Intersectionality」</b>
+        因素疊加的結果。
+      </div>
+      <div class="quote-sub">防災計畫必須打破均質化的假定，將性別與多元人權視角納入資源盤點與應變決策，才能真正接住每一位脆弱處境中的民眾。</div>
+    </section>
+
+    <!-- 8. 三層次行動策略總覽 [ICON] -->
+    <section>
+      <h2>三層次行動策略</h2>
+      <div class="adv-grid cols-2" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_family.png" alt="個人與家庭"></div>
+          <div class="adv-title">個人與家庭層次</div>
+          <div class="adv-desc">強化自助準備與安全防護</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_community.png" alt="社區與第一線服務"></div>
+          <div class="adv-title">社區與第一線服務層次</div>
+          <div class="adv-desc">建立互助網絡與精準辨識</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_policy.png" alt="制度與政策"></div>
+          <div class="adv-title">制度與政策層次</div>
+          <div class="adv-desc">落實多元包容與決策參與</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. 個人層次①：女性專屬避難包 -->
+    <section>
+      <h2 style="font-size:1.15em;">個人層次①：準備「女性專屬」避難包</h2>
+      <ul class="plain-list">
+        <li><b>生理用品</b>：至少準備一個生理週期的生理用品、護墊、拋棄式內褲</li>
+        <li><b>清潔用品</b>：隨身沖洗器、不透明垃圾袋，維持私密處清潔並減少心理壓力</li>
+        <li><b>人身安全</b>：防身警報器、哨子</li>
+        <li><b>隱私與安心</b>：哺乳巾、毛毯、家人照片等能帶來安心感的物品</li>
+      </ul>
+    </section>
+
+    <!-- 10. 前後對比 [VIZ] -->
+    <section id="slide-viz">
+      <h2 style="font-size:1.15em;">從「一般避難包」到「女性專屬避難包」</h2>
+      <div class="viz-wrap">
+        <div id="viz-before" class="viz-panel">
+          <div class="viz-label">一般避難包</div>
+          <ul>
+            <li>飲用水、乾糧</li>
+            <li>手電筒、行動電源</li>
+            <li>常備藥品</li>
+            <li>證件影本</li>
+          </ul>
+        </div>
+        <div id="viz-after" class="viz-panel">
+          <div class="viz-label">女性專屬避難包</div>
+          <ul>
+            <li>飲用水、乾糧</li>
+            <li>手電筒、行動電源</li>
+            <li>常備藥品、證件影本</li>
+            <li class="new">＋生理用品／護墊／拋棄式內褲</li>
+            <li class="new">＋隨身沖洗器、不透明垃圾袋</li>
+            <li class="new">＋防身警報器、哨子</li>
+            <li class="new">＋哺乳巾、隱私安心物品</li>
+          </ul>
+        </div>
+        <div id="viz-divider"></div>
+      </div>
+      <input id="viz-slider" type="range" min="0" max="100" value="0">
+    </section>
+
+    <!-- 11. 個人層次②：健康防護與安全出口 -->
+    <section>
+      <h2 style="font-size:1.15em;">個人層次②：健康防護與安全出口計畫</h2>
+      <div class="split-grid">
+        <div class="split-col left">
+          <div class="split-title">健康與人身安全防護</div>
+          <ul>
+            <li>切勿為減少如廁而少喝水，充分補水並適度活動，預防深靜脈血栓、膀胱炎、尿道炎、陰道炎</li>
+            <li>穿著褲裝與低調衣物，深色四角褲型內褲利於晾曬</li>
+            <li>戴帽子、口罩或盤髮，降低女性特徵被針對的風險</li>
+            <li>夜間如廁結伴同行，居家避難鎖好門窗並確認訪客身分</li>
+          </ul>
+        </div>
+        <div class="split-col right">
+          <div class="split-title">B 計畫與安全出口</div>
+          <ul>
+            <li>主要照顧者與家人約定集合點、分配任務</li>
+            <li>為失能或精神疾患家屬擬定「備援照顧計畫」：核心藥物清單＋醫院聯絡方式</li>
+            <li>家暴風險女性預先備份重要證件</li>
+            <li>將求助電話寫在隱密處，與信賴鄰居約定求救暗號</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. 社區與第一線服務層次 -->
+    <section>
+      <h2 style="font-size:1.15em;">社區與第一線服務層次</h2>
+      <ul class="plain-list">
+        <li><b>防災融入日常服務</b>：第一線社工、護理師、關懷人員用「簡易防災風險檢核表」盤點居住風險、照顧負擔與特殊用藥需求，並連結里長、防災士、社福機構</li>
+        <li><b>分眾溝通與求助工具</b>：新住民與移工提供多語（越南／印尼／泰文）或圖示教材，宣導「求助不影響居留與工作」；身心障礙者提供溝通小卡與個人健康資訊卡</li>
+        <li><b>社區點名與互助機制</b>：針對獨居長者、身心障礙女性、新住民媽媽等孤立群體，建立 LINE 群組或電話串聯的災時互相點名機制，主動確認需求</li>
+      </ul>
+    </section>
+
+    <!-- 13. 制度與政策層次 -->
+    <section>
+      <h2 style="font-size:1.15em;">制度與政策層次</h2>
+      <ul class="plain-list">
+        <li><b>打破戶籍限制的資源配給</b>：發展戶籍以外的資源領取管道，保障同性伴侶、租屋族、多元家庭權益</li>
+        <li><b>推動民防資訊平權</b>：建立中央級平台，提供東南亞語系、手語、點字版、易讀版、語音版等多格式防災指引</li>
+        <li><b>建構包容性避難收容空間</b>：男女分廁、隱密哺乳室與更衣空間、充足夜間照明與安全巡視、多元生理用品</li>
+        <li><b>制度化多元群體決策參與</b>：在「全社會防衛韌性委員會」等決策單位納入女性、多元性別、身心障礙者、兒少事務、原住民代表</li>
+      </ul>
+    </section>
+
+    <!-- 14. 章節轉場 [BG] -->
+    <section data-background-image="images/transition.png"
+             data-background-opacity="0.4"
+             data-background-size="cover">
+      <div class="transition-slide">
+        <div class="tag">講師應對與心法</div>
+        <h1>當學員說出真實處境時</h1>
+        <p class="subtitle">講師的回應方式，往往決定她願不願意繼續說下去</p>
+      </div>
+    </section>
+
+    <!-- 15. 講師應對五大心法 [ICON] -->
+    <section>
+      <h2>講師應對五大心法</h2>
+      <div class="adv-grid" style="grid-template-columns: repeat(5, 1fr);">
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_isolation.png" alt="都會疏離"></div>
+          <div class="adv-title">都會疏離</div>
+          <div class="adv-desc">建立主題式或功能性社福連結</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_economic.png" alt="經濟負擔"></div>
+          <div class="adv-title">經濟負擔</div>
+          <div class="adv-desc">運用社會物資進行韌性微調儲備</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_domestic.png" alt="家暴處境"></div>
+          <div class="adv-title">家暴處境</div>
+          <div class="adv-desc">物理性出口計畫與去標籤化暗號</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_org.png" alt="組織維持"></div>
+          <div class="adv-title">組織維持</div>
+          <div class="adv-desc">將自訓技能與日常職能無縫平移</div>
+        </div>
+        <div class="adv-card fragment">
+          <div class="adv-icon"><img src="images/icon_privacy.png" alt="隱私污名"></div>
+          <div class="adv-title">隱私污名</div>
+          <div class="adv-desc">去標籤化語標與功能性備援對接</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16. 現場提問 [INTERACT:poll] -->
+    <section id="slide-poll">
+      <h2>你在工作現場最常遇到哪一種挑戰？</h2>
+      <div id="poll-options" style="display:flex; flex-direction:column; gap:12px; margin-top:0.8em;"></div>
+      <div style="font-size:0.38em; color:#666; text-align:center; margin-top:0.8em;">
+        已投票：<span id="poll-total">0</span> 人
+      </div>
+    </section>
+
+    <!-- 17. 重點回顧 -->
+    <section>
+      <h2>重點回顧</h2>
+      <div class="split-grid">
+        <div class="split-col left">
+          <div class="split-title">ResilienceOS 六階段</div>
+          <ul>
+            <li>Risk 看見風險 → Vulnerability 辨識脆弱性 → Resilience 提升韌性</li>
+            <li>Action 採取行動 → Network 建立網絡 → Recovery 恢復生活</li>
+          </ul>
+        </div>
+        <div class="split-col right">
+          <div class="split-title">三層次行動策略</div>
+          <ul>
+            <li>個人與家庭：女性專屬避難包、健康防護、安全出口計畫</li>
+            <li>社區與第一線服務：風險檢核、分眾溝通、社區互助點名</li>
+            <li>制度與政策：資源平權、資訊平權、包容性空間、決策參與</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 18. 結語 [BG] -->
+    <section data-background-image="images/ending.png"
+             data-background-opacity="0.4"
+             data-background-size="cover">
+      <div class="end-slide">
+        <div class="big">
+          <img src="images/icon_network.png" alt=""
+               style="width:150px;height:150px;object-fit:contain;
+                      filter:drop-shadow(0 0 24px rgba(79,195,247,0.7));">
+        </div>
+        <h1 style="color:var(--accent2);">接住每一位脆弱處境中的女性</h1>
+        <p class="tagline">防災，不是均質化的假定，而是看見每一個人。</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    center: true,
+    progress: true,
+    controls: true,
+    slideNumber: 'c/t',
+    plugins: []
+  });
+
+  // VIZ 滑桿
+  document.getElementById('viz-slider')?.addEventListener('input', function() {
+    const v = +this.value;
+    document.getElementById('viz-after').style.clipPath = `inset(0 ${100 - v}% 0 0)`;
+    document.getElementById('viz-divider').style.left = v + '%';
+  });
+</script>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+  import {
+    getFirestore, collection, addDoc, onSnapshot,
+    serverTimestamp, query, orderBy, doc, setDoc
+  } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAYQhNavPSce17XtvDC5xnXyl9iUhW9KjA",
+    authDomain: "teacherstudy-109ef.firebaseapp.com",
+    projectId: "teacherstudy-109ef",
+    storageBucket: "teacherstudy-109ef.firebasestorage.app",
+    messagingSenderId: "196599230156",
+    appId: "1:196599230156:web:cfe55d364df3ae1b9d5c69"
+  };
+  const app = initializeApp(firebaseConfig);
+  const fdb = getFirestore(app);
+
+  /* ===== 文字雲 ===== */
+  const wordsRef = collection(fdb, 'women_resilience_training_wordcloud');
+  const COLORS = ['#4fc3f7','#e8643a','#ffb74d','#81c784','#ce93d8','#80deea','#f48fb1'];
+  let wcData = [];
+
+  window.wcSubmit = async function() {
+    const input = document.getElementById('wc-input');
+    const word = input.value.trim();
+    if (!word) return;
+    const btn = document.getElementById('wc-btn');
+    btn.disabled = true;
+    try {
+      await addDoc(wordsRef, { word, created_at: serverTimestamp() });
+      input.value = '';
+    } catch(e) { console.error(e); }
+    finally { btn.disabled = false; }
+  };
+  document.getElementById('wc-input')?.addEventListener('keypress', e => {
+    if (e.key === 'Enter') window.wcSubmit();
+  });
+  document.getElementById('wc-btn')?.addEventListener('click', window.wcSubmit);
+
+  onSnapshot(query(wordsRef, orderBy('created_at', 'asc')), snap => {
+    const words = [];
+    snap.forEach(doc => words.push(doc.data().word));
+    const counts = {};
+    words.forEach(w => counts[w] = (counts[w] || 0) + 1);
+    wcData = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
+    const totalEl = document.getElementById('wc-total');
+    const uniqueEl = document.getElementById('wc-unique');
+    if (totalEl) totalEl.textContent = words.length;
+    if (uniqueEl) uniqueEl.textContent = wcData.length;
+
+    const listEl = document.getElementById('wc-list');
+    if (listEl) {
+      listEl.innerHTML = wcData.slice(0, 12).map(([w, c]) =>
+        `<div style="display:flex;justify-content:space-between;padding:4px 0;
+                     border-bottom:1px solid rgba(255,255,255,0.06);">
+          <span>${w}</span><span style="color:var(--accent);font-weight:700;">${c}</span>
+        </div>`
+      ).join('') || '<div style="color:#555;padding:8px 0;">尚無資料</div>';
+    }
+
+    const empty = document.getElementById('wc-empty');
+    if (empty) empty.style.display = wcData.length > 0 ? 'none' : '';
+    drawWordCloud();
+  });
+
+  function drawWordCloud() {
+    const canvas = document.getElementById('wc-canvas');
+    if (!canvas || typeof WordCloud === 'undefined') return;
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width < 10 || rect.height < 10) return;
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    if (wcData.length === 0) return;
+    const maxCount = wcData[0][1];
+    WordCloud(canvas, {
+      list: wcData.map(([w, c]) => [w, Math.max(18, Math.round((c / maxCount) * 76))]),
+      gridSize: 6,
+      weightFactor: 1,
+      fontFamily: '"Microsoft JhengHei", "Noto Sans TC", sans-serif',
+      color: () => COLORS[Math.floor(Math.random() * COLORS.length)],
+      backgroundColor: 'transparent',
+      rotateRatio: 0.3,
+      shuffle: true,
+    });
+  }
+
+  Reveal.on('slidechanged', e => {
+    if (e.currentSlide?.id === 'slide-wordcloud') setTimeout(drawWordCloud, 150);
+  });
+
+  /* ===== 投票 ===== */
+  const OPTIONS = [
+    { id: 'isolation', label: '都會疏離' },
+    { id: 'economic',  label: '經濟負擔' },
+    { id: 'domestic',  label: '家暴處境' },
+    { id: 'org',       label: '組織維持' },
+    { id: 'privacy',   label: '隱私污名' },
+  ];
+  const pollRef = doc(fdb, 'women_resilience_training_poll', 'results');
+  const userId = 'user_' + Math.random().toString(36).slice(2, 9);
+  let myVote = null;
+
+  const container = document.getElementById('poll-options');
+  if (container) {
+    OPTIONS.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.id = `poll-btn-${opt.id}`;
+      btn.innerHTML = `
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="flex:0 0 24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,0.3);
+                       display:flex;align-items:center;justify-content:center;font-size:12px;"
+                id="poll-check-${opt.id}"></span>
+          <span style="flex:1;text-align:left;">${opt.label}</span>
+          <span id="poll-bar-wrap-${opt.id}"
+                style="flex:0 0 120px;height:8px;background:rgba(255,255,255,0.1);border-radius:4px;overflow:hidden;">
+            <div id="poll-bar-${opt.id}" style="height:100%;width:0;background:var(--accent2);border-radius:4px;transition:width 0.4s;"></div>
+          </span>
+          <span id="poll-pct-${opt.id}" style="flex:0 0 36px;text-align:right;font-size:0.75em;color:#888;">0%</span>
+        </div>
+      `;
+      btn.style.cssText = `width:100%;padding:12px 16px;background:rgba(255,255,255,0.06);
+        border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#fff;
+        font-size:0.48em;cursor:pointer;font-family:inherit;text-align:left;`;
+      btn.onclick = () => vote(opt.id);
+      container.appendChild(btn);
+    });
+  }
+
+  async function vote(optId) {
+    myVote = optId;
+    const data = {};
+    data[`votes.${userId}`] = optId;
+    data.updated_at = serverTimestamp();
+    await setDoc(pollRef, data, { merge: true });
+  }
+
+  onSnapshot(pollRef, snap => {
+    const data = snap.data() || {};
+    const votes = data.votes || {};
+    const counts = {};
+    OPTIONS.forEach(o => counts[o.id] = 0);
+    Object.values(votes).forEach(v => { if (counts[v] !== undefined) counts[v]++; });
+    const total = Object.values(counts).reduce((a, b) => a + b, 0);
+
+    const totalEl = document.getElementById('poll-total');
+    if (totalEl) totalEl.textContent = total;
+    OPTIONS.forEach(opt => {
+      const pct = total > 0 ? Math.round((counts[opt.id] / total) * 100) : 0;
+      const bar = document.getElementById(`poll-bar-${opt.id}`);
+      const pctEl = document.getElementById(`poll-pct-${opt.id}`);
+      if (bar) bar.style.width = pct + '%';
+      if (pctEl) pctEl.textContent = pct + '%';
+      const check = document.getElementById(`poll-check-${opt.id}`);
+      if (check && myVote === opt.id) {
+        check.textContent = '✓';
+        check.style.background = 'var(--accent2)';
+        check.style.borderColor = 'var(--accent2)';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
